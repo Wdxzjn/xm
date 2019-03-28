@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <van-nav-bar title="注册" left-text="返回" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar title="注册"   right-text="登录" left-arrow @click-right="onClickRight"/>
     <van-cell-group>
       <van-field v-model="userName" left-icon="manager" placeholder="请输入用户名"/>
       <van-field v-model="password" left-icon="lock" type="password" placeholder="请输入密码"/>
@@ -23,8 +23,10 @@ export default {
     };
   },
   methods: {
-    onClickLeft() {
-      this.$router.go(-1);
+    onClickRight() {
+      this.$router.push({
+        name:"Login"
+      });
     },
 
     async regHandle() {
