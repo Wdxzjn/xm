@@ -18,7 +18,7 @@
         icon="shop-o"
         text="店铺"
       />
-      <van-goods-action-big-btn text="加入购物车" />
+      <van-goods-action-big-btn :to="{name:'ShopCart',params:{priid:id,priname:name,priprice:price,prisrc:src}}" text="加入购物车" />
       <van-goods-action-big-btn 
         primary
         text="立即购买"
@@ -33,22 +33,8 @@ export default {
       id: '',
       name: '',
       price: '',
-      list:[{
-        id: 1,
-        name: '小米9',
-        price: 2999,
-        src: require('./phone.jpg')
-      },{
-        id: 2,
-        name: '小米8',
-        price: 2888,
-        src: require('./phone.jpg')
-      },{
-        id: 3,
-        name: '小米6',
-        price: 2699,
-        src: require('./phone.jpg')
-      }]
+      src:'',
+      
     }
     
   },
@@ -57,11 +43,12 @@ export default {
     this.id = this.$route.params.id;
     this.name = this.$route.params.name;
     this.price = this.$route.params.price;
+    this.src = this.$route.params.src;
   },
   methods: {
     backPage() {
-      this.$router.go(-1);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-    }
+      this.$router.go(-1);
+      }
   }
 }
 </script>
