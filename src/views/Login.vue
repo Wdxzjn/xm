@@ -1,14 +1,16 @@
 <template>
   <div class="list">
+    
     <van-cell-group>
       <van-field v-model="userName" placeholder="请输入用户名" />
       <van-field v-model="password" type="password" placeholder="请输入密码" />
     </van-cell-group>
     <van-button @click="loginHandle" class="btn-login" type="info" size="large">登录</van-button>
+    <router-link :to="{name:'Reg'}">还没账号？现在去注册</router-link>
   </div>
 </template>
 <script>
-import { loginIn } from '../utils/auth'
+//import { loginIn } from '../utils/auth'
 import { post } from 'axios'
 
 export default {
@@ -38,7 +40,7 @@ export default {
       // this.$router.push({
       //   name: 'UserCenter'
       // })
-    }
+    },
   }
 }
 </script>

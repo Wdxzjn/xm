@@ -19,15 +19,16 @@
 </template>
 <script>
 
-// import { products } from '../data'
+import { products } from '../data'
 import { get } from 'axios';
 
 export default {
   data() {
     return {
-      products: [],
+      //products: [],
+      products,
       page: 1,
-      pageCount: 1,
+      pageCount: 1, //总页数
     }
   },
   created() {
@@ -42,16 +43,17 @@ export default {
       this.loadData()
     },
     loadData() {
-      get(`http://localhost:3000/api/v1/products?page=${this.page}`)
-      .then(res => {
-        // console.log(res)
-        // 拼接服务器端的数据 使用数组的concat方法实现
-        this.products = this.products.concat(res.data.products)
-        this.pageCount = res.data.pages
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      // get(`http://localhost:3000/api/v1/products?page=${this.page}`)
+      // .then(res => {
+      //   // console.log(res)
+      //   // 拼接服务器端的数据 使用数组的concat方法实现
+      //   this.products = this.products.concat(res.data.products)
+      //   this.pageCount = res.data.pages
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      //this.products = this.products.concat(res.data.products)
     }
   }
 }
