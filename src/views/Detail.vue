@@ -10,7 +10,7 @@
         text="客服"
       />
       <van-goods-action-mini-btn
-        info="5"
+        
         icon="cart-o"
         text="购物车"
       />
@@ -60,7 +60,9 @@ export default {
   },
   methods: {
     backPage() {
-      this.$router.go(-1);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      this.$router.push({
+        name:"List",
+      });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     }
   }
 }

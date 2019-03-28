@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <van-nav-bar title="注册"   right-text="登录" left-arrow @click-right="onClickRight"/>
+    <van-nav-bar title="注册"   right-text="以有账号?点此登录" left-arrow @click-right="onClickRight"/>
     <van-cell-group>
       <van-field v-model="userName" left-icon="manager" placeholder="请输入用户名"/>
       <van-field v-model="password" left-icon="lock" type="password" placeholder="请输入密码"/>

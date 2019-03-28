@@ -20,7 +20,9 @@
 import { loginIn } from "../utils/auth";
 import { post } from "axios";
 import { Toast } from "vant";
-
+import { serverUrl } from "../utils/config"
+import { login } from "../services/users";
+//
 export default {
   data() {
     return {
@@ -30,21 +32,29 @@ export default {
   },
   methods: {
     loginHandle() {
-      loginIn();
-      if (!this.userName) {
-        Toast("请输入账号!");
-
-        return;
-      } else if (!this.password) {
-        Toast("请输入密码!");
-
-        return;
-      } else {
-        Toast.success("登录成功!");
-        this.$router.push({
-          name: "UserCenter"
-        });
+       if (!this.userName || !this.password) {
+        Toast("请输入账号和密码");
+         return;
       }
+      post(`${serverUrl}/api/v1/auth/login`, {
+        userName: this.userName,
+        password: this.password
+      })
+        .then(res => {
+          if (res.data.code == "success") {
+            
+            this.$eventBus.$emit("navToZX", "UserCenter");
+            Toast("登陆成功");
+            this.$router.push({
+              name: "UserCenter"
+            });
+            loginIn(res.data.token)
+          }else {
+            Toast("登录失败,请检查用户名和密码是否输入正确");
+          }
+        })
+        
+      // loginIn()
     }
   }
 };
