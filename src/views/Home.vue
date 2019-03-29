@@ -16,12 +16,14 @@
       </van-swipe-item>
     </van-swipe>
     
-    <router-link 
-      :to= "{name : 'Detail' ,params: {id : i.id, name: i.name, price: i.price}}" 
-      v-for='(i,index) in list' :key=index class="products">`<img :src='i.src' />
-    <h3>{{i.name}}</h3>
-    <p>{{i.price}}</p>` 
-    </router-link>
+    <div class="box">
+      <router-link 
+        :to= "{name : 'Detail' ,params: {id : i._id, name: i.name, price: i.price, src: i.coverImg}}" 
+        v-for='(i,index) in products' :key=index class="products">`<img :src='i.coverImg' />
+      <h3>{{i.name}}</h3>
+      <p>{{i.price}}</p>` 
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -29,6 +31,7 @@
 // @ is an alias to /src
 
 import { images } from '../data'
+import { products } from '../data'
 
 export default {
   name: 'home',
@@ -36,22 +39,23 @@ export default {
     return {
       value:'',
       images,
-      list:[{
-        id: 1,
-        name: '小米9',
-        price: 2999,
-        src: require('./phone.jpg')
-      },{
-        id: 2,
-        name: '小米8',
-        price: 2888,
-        src: require('./phone.jpg')
-      },{
-        id: 3,
-        name: '小米6',
-        price: 2699,
-        src: require('./phone.jpg')
-      }]
+      // list:[{
+      //   id: 1,
+      //   name: '小米9',
+      //   price: 2999,
+      //   src: require('./phone.jpg')
+      // },{
+      //   id: 2,
+      //   name: '小米8',
+      //   price: 2888,
+      //   src: require('./phone.jpg')
+      // },{
+      //   id: 3,
+      //   name: '小米6',
+      //   price: 2699,
+      //   src: require('./phone.jpg')
+      // }]
+      products
     }
   },
   components: {
@@ -71,18 +75,32 @@ export default {
   width: 100%;
 }
 .products{
-  width:50%;
+  width:47%;
   height: 150px;
+  padding-top: 5px;
   float: left;
   text-align: center;
+  margin: 5px;
+  border:1px solid #ccc;
+  border-radius: 10px ;
 }
 .products h3,.products p{
   margin: 0;
+  margin-left:3.5rem;
+  width:6rem;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis
 }
 .products img{
   margin: 0;
   width:100px;
   height:100px;
+}
+.box{
+  padding-bottom:2rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
 }
 </style>
 

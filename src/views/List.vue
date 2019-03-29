@@ -4,65 +4,61 @@
       v-for="product in products"
       :num="product.quantity"
       :price="product.price"
-      :desc="product.descriptions"  
+      :desc="product.descriptions"
       :title="product.name"
-      :thumb="product.coverImg"
+      :thumb="'http://api.cat-shop.penkuoer.com'+product.coverImg"
       :key="product._id"
       :thumb-link="`#/list/${product._id}`"
     >
-    <div slot="footer">
-      <van-button size="mini" @click="addToCartHandle(product._id)"><van-icon class="btn-cart" name="cart" /></van-button>
-    </div>
+      <div slot="footer">
+        <van-button size="mini" @click="addToCartHandle(product._id)">
+          <van-icon class="btn-cart" name="cart"/>
+        </van-button>
+      </div>
     </van-card>
     <van-button size="large" @click="loadMore">加载更多</van-button>
   </div>
 </template>
 <script>
-
-import { products } from '../data'
-import { get } from 'axios';
-
+//import { products } from '../data'
+import { get } from "axios";
+import { serverUrl } from "../utils/config.js";
 export default {
   data() {
     return {
-      //products: [],
-      products,
-      page: 1,
-      pageCount: 1, //总页数
+      products:[],
+      page:1,
+      pageCount:1
+    };
+  },
+  methods: {
+    addToCartHandle() {
+      
+    },
+    loadMore(){
+      this.page += 1
+      this.loadData()
+    },
+    loadData(){
+      get(`${serverUrl}/api/v1/products?page=${this.page}`)
+      .then(res => {
+          this.products = this.products.concat(res.data.products)
+          this.pageCount = res.data.pages;
+          console.log(res);
+          this.products = this.products.concat(res.data.products)
+      })
     }
   },
   created() {
     this.loadData()
-  },
-  methods: {
-    addToCartHandle(id) {
-      alert(id)
-    },
-    loadMore() {
-      this.page += 1
-      this.loadData()
-    },
-    loadData() {
-      // get(`http://localhost:3000/api/v1/products?page=${this.page}`)
-      // .then(res => {
-      //   // console.log(res)
-      //   // 拼接服务器端的数据 使用数组的concat方法实现
-      //   this.products = this.products.concat(res.data.products)
-      //   this.pageCount = res.data.pages
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      //this.products = this.products.concat(res.data.products)
-    }
   }
-}
+};
 </script>
 <style>
 .list {
   padding-bottom: 60px;
 }
-.btn-cart{
+.btn-cart {
   color: deeppink;
   font-size: 1.2rem;
 }
