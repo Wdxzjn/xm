@@ -1,9 +1,9 @@
 <template>
   <div class="list">
     <van-icon @click="backPage" name="arrow-left" />
-    <img class="list-img" src="./feel.jpg" alt="">
-    <p class="price">￥2999</p>
-    <p class="txt">小米9 战斗天使 骁龙855旗舰处理器 4800万超高像素</p>
+    <img class="list-img" :src="src" alt="">
+    <p class="price">{{price}}</p>
+    <p class="txt">{{name}}</p>
     <van-goods-action>
       <van-goods-action-mini-btn
         icon="chat-o"
@@ -13,12 +13,13 @@
         
         icon="cart-o"
         text="购物车"
+        @click="toShopCart"
       />
       <van-goods-action-mini-btn
         icon="shop-o"
         text="店铺"
       />
-      <van-goods-action-big-btn :to="{name:'ShopCart',params:{priid:id,priname:name,priprice:price,prisrc:src}}" text="加入购物车" />
+      <van-goods-action-big-btn text="加入购物车" />
       <van-goods-action-big-btn 
         primary
         text="立即购买"
@@ -27,14 +28,15 @@
   </div>
 </template>
 <script>
+import { products } from '../data'
 export default {
   data() {
     return{
+      products,
       id: '',
       name: '',
       price: '',
-      src:'',
-      
+      src: ''
     }
     
   },
@@ -47,15 +49,16 @@ export default {
   },
   methods: {
     backPage() {
-      this.$router.go(-1);
       this.$router.push({
-        name:"List",
+        name: 'Home'
       });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     },
-
-      
-      }
-
+    toShopCart() {
+      this.$router.push({
+        name: 'ShopCart'
+      })
+    }
+  }
 }
 </script>
 
