@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <van-nav-bar title="注册"   right-text="以有账号?点此登录" left-arrow @click-right="onClickRight"/>
+    <van-nav-bar left-text="返回" title="注册"   right-text="以有账号?点此登录" left-arrow @click-left="onClickLeft" @click-right="onClickRight"/>
     <van-cell-group>
       <van-field v-model="userName" left-icon="manager" placeholder="请输入用户名"/>
       <van-field v-model="password" left-icon="lock" type="password" placeholder="请输入密码"/>
@@ -28,7 +28,10 @@ export default {
         name:"Login"
       });
     },
-
+    onClickLeft(){
+        this.$router.go(-1);
+        
+    },
     async regHandle() {
       if (!this.userName || !this.password) {
         Toast("请输入账号和密码!");

@@ -32,26 +32,23 @@ export default {
   },
   methods: {
     loginHandle() {
-       if (!this.userName || !this.password) {
+      if (!this.userName || !this.password) {
         Toast("请输入账号和密码");
-         return;
+        return;
       }
       post(`${serverUrl}/api/v1/auth/login`, {
         userName: this.userName,
         password: this.password
-      })
-        .then(res => {
-          if (res.data.code == "success") {
-            this.$eventBus.$emit("navToZX", "UserCenter");
-            Toast("登陆成功");
-            this.$router.push({
-              name: "UserCenter"
-            });
-            loginIn(res.data.token)
-          }else {
-            Toast("登录失败,请检查用户名和密码是否输入正确");
-          }
-        })
+      }).then(res => {
+        if (res.data.code == "success") {
+          this.$eventBus.$emit("navToZX", "UserCenter");
+          Toast.success("登陆成功");
+          loginIn(res.data.token);
+          this.$router.push("/user_center");
+        } else {
+          Toast("登录失败,请检查用户名和密码是否输入正确");
+        }
+      });
       // loginIn()
     }
   }

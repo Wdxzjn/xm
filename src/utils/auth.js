@@ -14,6 +14,13 @@ export function isLogined() {
   }
 }
 
+// export function loginHandle() {
+//   if (sessionStorage.getItem('token')) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
 /**
  * 清除本地存储
  */
