@@ -29,7 +29,7 @@ export function addToShopCart(product, quantity) {
 
 /**
  * 从购物车中删除商品
- * @param {*} product 
+ * @param {*} product
  */
 export function delFromProduct(product) {
   let myCarts = getShopCart()

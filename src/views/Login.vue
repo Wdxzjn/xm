@@ -20,9 +20,9 @@
 import { loginIn } from "../utils/auth";
 import { post } from "axios";
 import { Toast } from "vant";
-import { serverUrl } from "../utils/config"
-import { login } from "../services/users";
-//
+import { serverUrl } from "../utils/config";
+//import { login } from "../services/users";
+
 export default {
   data() {
     return {
@@ -42,7 +42,6 @@ export default {
       })
         .then(res => {
           if (res.data.code == "success") {
-            
             this.$eventBus.$emit("navToZX", "UserCenter");
             Toast("登陆成功");
             this.$router.push({
@@ -53,7 +52,6 @@ export default {
             Toast("登录失败,请检查用户名和密码是否输入正确");
           }
         })
-        
       // loginIn()
     }
   }
