@@ -3,7 +3,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import App from './App.vue'
 import router from './router'
-import { post } from 'axios'
+//import { post } from 'axios'
 
 const eventBus = new Vue();
 Vue.config.productionTip = false

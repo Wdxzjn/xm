@@ -1,0 +1,13 @@
+[33m75b6fc6[m[33m ([m[1;36mHEAD -> [m[1;32mxiaoming[m[33m, [m[1;31morigin/xiaoming[m[33m)[m HEAD@{0}: checkout: moving from master to xiaoming
+[33m4108858[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{1}: commit (merge): 解决冲突
+[33m5cce74d[m HEAD@{2}: pull git@gitee.com:wdxzjn/XM.git: Fast-forward
+[33m6401b26[m HEAD@{3}: checkout: moving from xiaoming to master
+[33m75b6fc6[m[33m ([m[1;36mHEAD -> [m[1;32mxiaoming[m[33m, [m[1;31morigin/xiaoming[m[33m)[m HEAD@{4}: commit: 详情页数据调取
+[33m74a8b7a[m HEAD@{5}: commit: 列表页数据调用
+[33m6401b26[m HEAD@{6}: checkout: moving from master to xiaoming
+[33m6401b26[m HEAD@{7}: checkout: moving from master to master
+[33m6401b26[m HEAD@{8}: merge origin/xiaoming: Fast-forward
+[33m4eb4dfb[m HEAD@{9}: checkout: moving from xiaoming to master
+[33m6401b26[m HEAD@{10}: commit: 开工
+[33m4eb4dfb[m HEAD@{11}: checkout: moving from master to xiaoming
+[33m4eb4dfb[m HEAD@{12}: clone: from git@gitee.com:wdxzjn/XM.git

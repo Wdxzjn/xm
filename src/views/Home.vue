@@ -15,54 +15,48 @@
         <img class="swipe-img" :src="img"/>
       </van-swipe-item>
     </van-swipe>
-    
-    <div class="box">
-      <router-link 
-        :to= "{name : 'Detail' ,params: {id : i._id, name: i.name, price: i.price, src: i.coverImg}}" 
-        v-for='(i,index) in products' :key=index class="products">`<img :src='i.coverImg' />
+
+    <router-link
+      :to="{name : 'Detail' ,params: {id : i._id}}"
+      v-for="(i,index) in list"
+      :key="index"
+      class="products"
+    >
+      `
+      <img :src="'http://api.cat-shop.penkuoer.com'+i.coverImg">
       <h3>{{i.name}}</h3>
-      <p>{{i.price}}</p>` 
-      </router-link>
-    </div>
+      <!-- <h4>{{i.descriptions}}</h4> -->
+      <p>{{i.price}}</p>`
+    </router-link>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
-import { images } from '../data'
-import { products } from '../data'
-
+//     @ is an alias to /src
+import { get } from "axios";
+import { serverUrl } from "../utils/config.js";
 export default {
   name: 'home',
   data() {
     return {
-      value:'',
-      images,
-      // list:[{
-      //   id: 1,
-      //   name: '小米9',
-      //   price: 2999,
-      //   src: require('./phone.jpg')
-      // },{
-      //   id: 2,
-      //   name: '小米8',
-      //   price: 2888,
-      //   src: require('./phone.jpg')
-      // },{
-      //   id: 3,
-      //   name: '小米6',
-      //   price: 2699,
-      //   src: require('./phone.jpg')
-      // }]
-      products
-    }
+      value: "",
+      images: [
+        "https://i1.mifile.cn/a4/xmad_15517939170939_oiXCK.jpg",
+        "https://i1.mifile.cn/a4/xmad_1553592931609_qLJpe.jpg",
+        "https://i1.mifile.cn/a4/xmad_15535933141925_ulkYv.jpg"
+      ],
+      list: {}
+    };
   },
-  components: {
+  created() {
+    get(`${serverUrl}/api/v1/products`).then(res => {
+      this.list = res.data.products;
+    });
   },
-   methods: {
+  components: {},
+  methods: {
     onSearch() {
-      this.$toast(this.value);
+      this.$toast(this.value)
     },
     onCancel() {
       this.$toast(this.$t('cancel'));
@@ -84,13 +78,11 @@ export default {
   border:1px solid #ccc;
   border-radius: 10px ;
 }
-.products h3,.products p{
+.products h3,
+.products h4,
+.products p {
   margin: 0;
-  margin-left:3.5rem;
-  width:6rem;
-  white-space: nowrap;
-  overflow:hidden;
-  text-overflow: ellipsis
+  font-size: 0.7rem;
 }
 .products img{
   margin: 0;
