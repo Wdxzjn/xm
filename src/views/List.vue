@@ -21,35 +21,33 @@
   </div>
 </template>
 <script>
-//import { products } from '../data'
 import { get } from "axios";
 import { serverUrl } from "../utils/config.js";
 export default {
   data() {
     return {
-      products:[],
-      page:1,
-      pageCount:1
+      products: [],
+      page: 1,
+      pageCount: 1
     };
   },
   methods: {
     addToCartHandle(id) {
-      console.log(id)
+      alert(id);
     },
-    loadMore(){
-      this.page += 1
-      this.loadData()
+    loadMore() {
+      this.page += 1;
+      this.loadData();
     },
-    loadData(){
-      get(`${serverUrl}/api/v1/products?page=${this.page}`)
-      .then(res => {
-          this.products = this.products.concat(res.data.products)
-          this.pageCount = res.data.pages;
-      })
+    loadData() {//   为列表页调取接口
+      get(`${serverUrl}/api/v1/products?page=${this.page}`).then(res => {
+        this.products = this.products.concat(res.data.products);
+        this.pageCount = res.data.pages;
+      });
     }
   },
   created() {
-    this.loadData()
+    this.loadData();
   }
 };
 </script>
