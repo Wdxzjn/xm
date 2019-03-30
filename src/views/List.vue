@@ -9,6 +9,7 @@
       :thumb="'http://api.cat-shop.penkuoer.com'+product.coverImg"
       :key="product._id"
       :thumb-link="`#/list/${product._id}`"
+      :to="{params:{id:product._id}}"
     >
       <div slot="footer">
         <van-button size="mini" @click="addToCartHandle(product._id)">
@@ -32,8 +33,8 @@ export default {
     };
   },
   methods: {
-    addToCartHandle() {
-      
+    addToCartHandle(id) {
+      console.log(id)
     },
     loadMore(){
       this.page += 1
@@ -44,8 +45,6 @@ export default {
       .then(res => {
           this.products = this.products.concat(res.data.products)
           this.pageCount = res.data.pages;
-          console.log(res);
-          this.products = this.products.concat(res.data.products)
       })
     }
   },

@@ -20,7 +20,7 @@ const router = new Router({
       name: 'Home',
       component: Home
     },{
-      path: '/:id',
+      path: '/Home:id',
       name: 'Detail',
       component: Detail
     },{

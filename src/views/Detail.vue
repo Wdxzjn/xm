@@ -1,9 +1,10 @@
 <template>
   <div class="list">
     <van-icon @click="backPage" name="arrow-left" />
-    <img class="list-img" :src="src" alt="">
-    <p class="price">{{price}}</p>
-    <p class="txt">{{name}}</p>
+    <img class="list-img" :src="'http://api.cat-shop.penkuoer.com'+list.coverImg" alt="">
+    <p class="price">￥{{list.price}}元</p>
+    <p>{{list.name}}</p>
+    <p class="txt">{{list.descriptions}}</p>
     <van-goods-action>
       <van-goods-action-mini-btn
         icon="chat-o"
@@ -19,7 +20,7 @@
         icon="shop-o"
         text="店铺"
       />
-      <van-goods-action-big-btn text="加入购物车" />
+      <van-goods-action-big-btn :to="{name:'ShopCart'}" text="加入购物车" />
       <van-goods-action-big-btn 
         primary
         text="立即购买"
@@ -28,30 +29,31 @@
   </div>
 </template>
 <script>
-import { products } from '../data'
+import { get } from "axios";
+import { serverUrl } from "../utils/config.js";
+//import { products } from "../data/"
 export default {
   data() {
     return{
-      products,
+     // products:{},
       id: '',
-      name: '',
-      price: '',
-      src: ''
+     list:{}
     }
     
   },
   created() {
-    
     this.id = this.$route.params.id;
-    this.name = this.$route.params.name;
-    this.price = this.$route.params.price;
-    this.src = this.$route.params.src;
+    get(`${serverUrl}/api/v1/products/${this.id}`)
+    .then((res)=>{
+      // console.log(res)
+       this.list = res.data
+    })
   },
   methods: {
     backPage() {
       this.$router.push({
         name: 'Home'
-      });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      });
     },
     toShopCart() {
       this.$router.push({
