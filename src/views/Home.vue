@@ -26,7 +26,7 @@
 </template>
 
 <script>
-//   @ is an alias to /src
+//     @ is an alias to /src
 import { get } from "axios";
 import { serverUrl } from "../utils/config.js";
 export default {
