@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="test">
+        <li>这是第一条</li>
+        <li>这是第二条</li>
+        <li>这是第三条</li>
+    </ul>
+</body>
+<script>
+    window.onload = function() {
+        var lis = document.getElementById('test').children;
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].onclick = (function(i) {
+                return function() {
+                    alert(i)
+                };
+            })(i);
+        };
+        // for (let i = 0; i < lis.length; i++) {
+        //     lis[i].onclick = function() {
+        //         alert(i)
+        //     }
+        // };
+    }
+</script>
+</html>

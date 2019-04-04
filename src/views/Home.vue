@@ -15,19 +15,31 @@
         <img class="swipe-img" :src="img"/>
       </van-swipe-item>
     </van-swipe>
-
-    <router-link
-      :to="{name : 'Detail' ,params: {id : i._id}}"
-      v-for="(i,index) in list"
-      :key="index"
-      class="products"
-    >
-      `
-      <img :src="'http://api.cat-shop.penkuoer.com'+i.coverImg">
-      <h3>{{i.name}}</h3>
-      <!-- <h4>{{i.descriptions}}</h4> -->
-      <p>{{i.price}}</p>`
-    </router-link>
+    <van-notice-bar mode="closeable">
+      足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。
+    </van-notice-bar>
+    <div class="box">
+      <router-link
+        :to="{name : 'Detail' ,params: {id : i._id}}"
+        v-for="(i,index) in list"
+        :key="index"
+        class="products"
+      >
+        `
+        <img :src="'http://api.cat-shop.penkuoer.com'+i.coverImg">
+        <h3>{{i.name}}</h3>
+        <!-- <h4>{{i.descriptions}}</h4> -->
+        <p>{{i.price}}</p>`
+      </router-link>
+    </div>
+    <van-pagination 
+      class='navPage'
+      v-model="currentPage" 
+      :total-items="101" 
+      :show-page-size="3" 
+      @change="changePage"
+      force-ellipses
+    />
   </div>
 </template>
 
@@ -40,6 +52,7 @@ export default {
   data() {
     return {
       value: "",
+      currentPage: 1,
       images: [
         "https://i1.mifile.cn/a4/xmad_15517939170939_oiXCK.jpg",
         "https://i1.mifile.cn/a4/xmad_1553592931609_qLJpe.jpg",
@@ -49,7 +62,8 @@ export default {
     };
   },
   created() {
-    get(`${serverUrl}/api/v1/products`).then(res => {
+    get(`${serverUrl}/api/v1/products?{this.currentPage}`).then(res => {
+      console.log(res.data.products);
       this.list = res.data.products;
     });
   },
@@ -60,6 +74,12 @@ export default {
     },
     onCancel() {
       this.$toast(this.$t('cancel'));
+    },
+    changePage() {
+      get(`${serverUrl}/api/v1/products?{this.currentPage}`).then(res => {
+        //console.log(res.data.products);
+        this.list = res.data.products;
+      })
     }
   }
 }
@@ -69,14 +89,14 @@ export default {
   width: 100%;
 }
 .products{
-  width:47%;
+  width:46.5%;
   height: 150px;
   padding-top: 5px;
   float: left;
   text-align: center;
-  margin: 5px;
+  margin:0.25rem;
   border:1px solid #ccc;
-  border-radius: 10px ;
+  border-radius:0.7rem;
 }
 .products h3,
 .products h4,
@@ -90,9 +110,11 @@ export default {
   height:100px;
 }
 .box{
+  overflow: hidden;
+}
+.navPage{
   padding-bottom:2rem;
   margin-bottom: 1.5rem;
-  overflow: hidden;
 }
 </style>
 

@@ -22,6 +22,12 @@
     data() {
         return {
         chosenAddressId: '1',
+        addr: {
+            id: '',
+            name: '',
+            tel: '',
+            address: ''
+        },
         list: [
             {
             id: '1',
@@ -34,6 +40,9 @@
             name: '李四',
             tel: '1310000000',
             address: '浙江省杭州市拱墅区莫干山路 50 号'
+            },
+            {
+               
             }
         ],
         disabledList: [
@@ -46,7 +55,32 @@
         ]
         }
     },
-
+    created() {
+        var address=[];
+        if(localStorage.getItem('address')){
+            address = JSON.parse(localStorage.getItem('address'));
+            this.list.push(address);
+            console.log(this.list)
+        }
+        this.list.pop(1);
+        console.log(this.list);
+        this.$eventBus.$on('addToList',(res) => {
+            console.log(res);
+            this.addr.id= 1;
+            this.addr.name = res.name;
+            this.addr.tel = res.tel;
+            this.addr.address = res.address;
+            this.list.push(this.addr);
+            //console.log(this.list)
+        })
+        // this.addr.id = this.$route.params.id;
+        // this.addr.name = this.$route.params.name;
+        // this.addr.tel = this.$route.params.tel;
+        // this.addr.address = this.$route.params.address;
+        // this.list.push(this.addr);
+        // console.log(this.$route.params.name);
+        //console.log(this.$route)
+    },
     methods: {
         onAdd() {
             this.$router.push({

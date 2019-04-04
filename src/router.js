@@ -8,6 +8,8 @@ import Reg from './views/Reg.vue'
 import UserCenter from './views/UserCenter.vue'
 import Orders from './views/Orders.vue'
 import ShopCart from './views/ShopCart.vue'
+import Address from './views/address.vue'
+import newAddress from './views/newAddress.vue'
 import {
   isLogined
 } from './utils/auth'
@@ -37,6 +39,14 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login,
+    }, {
+      path: '/address',
+      name: 'Address',
+      component: Address,
+    }, {
+      path: '/newAddress',
+      name: 'newAddress',
+      component: newAddress,
     }, {
       path: '/user_center',
       name: 'UserCenter',
