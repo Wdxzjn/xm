@@ -35,7 +35,7 @@
     <van-pagination 
       class='navPage'
       v-model="currentPage" 
-      :total-items="101" 
+      :total-items="31" 
       :show-page-size="3" 
       @change="changePage"
       force-ellipses
@@ -62,7 +62,7 @@ export default {
     };
   },
   created() {
-    get(`${serverUrl}/api/v1/products?{this.currentPage}`).then(res => {
+    get(`${serverUrl}/api/v1/products`).then(res => {
       console.log(res.data.products);
       this.list = res.data.products;
     });
@@ -75,8 +75,12 @@ export default {
     onCancel() {
       this.$toast(this.$t('cancel'));
     },
-    changePage() {
-      get(`${serverUrl}/api/v1/products?{this.currentPage}`).then(res => {
+    changePage(e) {
+      var evt = e || event;
+      //console.log(evt)
+      this.currentPage = evt;
+      //console.log(this.currentPage)
+      get(`${serverUrl}/api/v1/products?page=${this.currentPage}`).then(res => {
         //console.log(res.data.products);
         this.list = res.data.products;
       })

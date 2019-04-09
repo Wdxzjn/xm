@@ -1,46 +1,90 @@
 <template>
-  <div class="list" >
-    <van-nav-bar
-      title="个人中心"
-      left-text="返回"
-      left-arrow
-      @click-left="onClickLeft"
-    />
-    <van-cell @click="pageChange" value="我的订单" icon="coupon-o" is-link>
-      <template slot="我的订单">
-        <span class="custom-text">单元格</span>
-        <van-tag type="danger">标签</van-tag>
-      </template>
-    </van-cell>
-    <van-cell @click="toAddress" title="收货地址管理" icon="location-o" is-link />
-    <van-cell value="修改密码" icon="user-o" is-link>
-      <template slot="我的订单">
-        <span class="custom-text">单元格</span>
-        <van-tag type="danger">标签</van-tag>
-      </template>
-    </van-cell>
-    <van-cell value="修改个人信息" icon="friends-o" is-link>
-      <template slot="我的订单">
-        <span class="custom-text">单元格</span>
-        <van-tag type="danger">标签</van-tag>
-      </template>
-    </van-cell>
-    <van-cell value="我的优惠卷" icon="discount" is-link>
-      <template slot="我的订单">
-        <span class="custom-text">单元格</span>
-        <van-tag type="danger">标签</van-tag>
-      </template>
-    </van-cell>
-    <van-cell value="我的钱包" icon="paid" is-link>
-      <template slot="我的订单">
-        <span class="custom-text">单元格</span>
-        <van-tag type="danger">标签</van-tag>
-      </template>
-    </van-cell>
-    <br>
-    <button @click="logOutHandle">退出登录</button>
-  </div>
+    <div class="main">
+        <div class="top">
+            <div class='top-inf'>
+                <img src="../../public/tx.jpg" alt="">
+                <div class="text">
+                    <p class="user-name">后来</p>
+                    <p class="logout" @click="logOutHandle">退出登录</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <ul>
+                <li>
+                    <van-icon @click="pageChange" name="coupon-o"/>
+                    <p>我的订单</p>
+                </li>
+                <li>
+                    <van-icon @click="toAddress" name="location-o"/>
+                    <p>收货地址管理</p>
+                </li>
+                <li>
+                    <van-icon name="contact"/>
+                    <p>个人信息</p>
+                </li>
+                <li>
+                    <van-icon name="credit-pay"/>
+                    <p>我的钱包</p>
+                </li>
+                <li>
+                    <van-icon name="discount"/>
+                    <p>我的优惠卷</p>
+                </li>
+                <li>
+                    <van-icon name="vip-card-o"/>
+                    <p>会员频道</p>
+                </li>
+            </ul>
+        </div>
+    </div>
 </template>
+
+
+<style scoped>
+.top{
+    width: 100%;
+    height: 10rem;
+    background: rgb(224, 80, 80)
+}
+.top img{
+    width: 5rem;
+    height: 5rem;
+    float: left;
+    border-radius: 50%;
+    margin-left: 2.5rem;
+    margin-top: 2.5rem
+}
+.top-inf .text{
+    float: left;
+    margin-top:2.4rem;
+    margin-left: 1rem;
+    color: #fff;
+    font-size: 1.2rem
+}
+.top-inf .text p{
+    margin:0.5rem
+}
+.bottom ul{
+    width: 100%;
+}
+.bottom ul li{
+    float: left;
+    width: 33.3%;
+    height: 7rem;
+    text-align: center;
+    color:#aaa
+}
+.bottom ul li i{
+    font-size: 2.5rem;
+    margin-top: 1rem
+}
+.bottom ul li p{
+    margin: 0
+}
+
+</style>
+
 <script>
 import { logOut } from '../utils/auth'
 export default {
@@ -52,9 +96,6 @@ export default {
       this.$router.push({
         name: 'Home'
       })
-    },
-    onClickLeft() {
-      this.$router.back();
     },
     pageChange() {
       this.$eventBus.$emit('navToZX','ShopCart')
@@ -71,13 +112,3 @@ export default {
   
 }
 </script>
-
-<style scoped>
-button{
-  width: 100%;
-  height:3rem;
-  line-height: 3rem;
-  font-size:1.5rem;
-  color: rgb(53, 31, 31);
-}
-</style>

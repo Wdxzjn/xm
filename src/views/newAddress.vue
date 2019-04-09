@@ -16,7 +16,6 @@
             @save="onSave"
             @delete="onDelete"
             @change-detail="onChangeDetail"
-            :to="{params:{id: addr.id, name: addr.name, tel: addr.tel, address: addr.address}}"
         />
     </div>
 </template>
@@ -25,12 +24,6 @@
 export default {
     data() {
     return {
-      addr: {
-        id: '',
-        name: '',
-        tel: '',
-        address: ''
-      },
       areaList: {
       province_list: {
           110000: '北京市',
@@ -62,7 +55,7 @@ export default {
   methods: {
     onSave(content) {
       console.log(content);
-      this.$eventBus.$emit('addToList',{name: content.name, tel: content.tel, address: content.city+content.addressDetail})
+      //this.$eventBus.$emit('addToList',{name: content.name, tel: content.tel, address: content.city+content.addressDetail})
       // this.addr.name = content.name;
       // this.addr.tel = content.tel;
       // this.addr.address = content.address

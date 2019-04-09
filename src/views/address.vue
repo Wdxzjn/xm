@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-nav-bar
-        title="个人中心"
+        title="地址列表"
         left-text="返回"
         left-arrow
         @click-left="onClickLeft"
@@ -13,6 +13,7 @@
             disabled-text="以下地址超出配送范围"
             @add="onAdd"
             @edit="onEdit"
+            @select='onSelect'
         />
     </div>
 </template>
@@ -40,9 +41,6 @@
             name: '李四',
             tel: '1310000000',
             address: '浙江省杭州市拱墅区莫干山路 50 号'
-            },
-            {
-               
             }
         ],
         disabledList: [
@@ -62,17 +60,17 @@
             this.list.push(address);
             console.log(this.list)
         }
-        this.list.pop(1);
+        //this.list.pop(2);
         console.log(this.list);
-        this.$eventBus.$on('addToList',(res) => {
-            console.log(res);
-            this.addr.id= 1;
-            this.addr.name = res.name;
-            this.addr.tel = res.tel;
-            this.addr.address = res.address;
-            this.list.push(this.addr);
-            //console.log(this.list)
-        })
+        // this.$eventBus.$on('addToList',(res) => {
+        //     console.log(res);
+        //     this.addr.id= 1;
+        //     this.addr.name = res.name;
+        //     this.addr.tel = res.tel;
+        //     this.addr.address = res.address;
+        //     this.list.push(this.addr);
+        //     //console.log(this.list)
+        // })
         // this.addr.id = this.$route.params.id;
         // this.addr.name = this.$route.params.name;
         // this.addr.tel = this.$route.params.tel;
@@ -87,9 +85,11 @@
                 name: 'newAddress'
             })
         },
-
+        onSelect(item, index) {
+            //this.chosenAddressId = item.id
+        },
         onEdit(item, index) {
-       //Toast('编辑地址:' + index);
+             console.log(item)
         },
         onClickLeft() {
             this.$router.push({
