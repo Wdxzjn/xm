@@ -22,6 +22,7 @@
 </template>
 <script>
 import { get } from "axios";
+import { addToShopCart } from '../services/users'
 import { serverUrl } from "../utils/config.js";
 export default {
   data() {
@@ -33,7 +34,10 @@ export default {
   },
   methods: {
     addToCartHandle(id) {
-      alert(id);
+      //alert(id);
+      alert('添加成功')
+      addToShopCart(id, 1)
+      this.$eventBus.$emit('addToShopCartEnd');
     },
     loadMore() {
       this.page += 1;

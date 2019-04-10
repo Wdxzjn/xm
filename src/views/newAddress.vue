@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-nav-bar
-        title="个人中心"
+        title="添加地址"
         left-text="返回"
         left-arrow
         @click-left="onClickLeft"
