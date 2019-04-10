@@ -7,15 +7,15 @@
     <p class="txt">{{list.descriptions}}</p>
     <van-goods-action>
       <van-goods-action-mini-btn icon="chat-o" text="客服"/>
-      <van-goods-action-mini-btn info="5" icon="cart-o" text="购物车"/>
+      <van-goods-action-mini-btn @click='toShopCart()' icon="cart-o" text="购物车"/>
       <van-goods-action-mini-btn icon="shop-o" text="店铺"/>
-      <van-goods-action-big-btn @click='addToCart(list.id)' :to="{name:'ShopCart'}" text="加入购物车"/>
-      <van-goods-action-big-btn primary text="立即购买"/>
+      <van-goods-action-big-btn @click='addToCartHandle()' text="加入购物车"/>
     </van-goods-action>
   </div>
 </template>
 <script>
 import { get } from "axios";
+import { addToShopCart } from '../services/users'
 import { serverUrl } from "../utils/config.js";
 //import { products } from "../data/"
 export default {
@@ -30,15 +30,27 @@ export default {
     get(`${serverUrl}/api/v1/products/${this.id}`).then(res => {
       //  console.log(res)
       this.list = res.data;
-      console.log(this.list)
+      console.log(this.list._id)
     });
   },
   methods: {
     backPage() {
       this.$router.go(-1);
     },
-    addToCart(params) {
-      localStorage.setItem('my-shopcart',params)
+    // addToCart() {
+    //   localStorage.setItem('my-shopcart',this.list._id)
+    // }
+    addToCartHandle() {
+      //alert(id);
+      alert('添加成功')
+      addToShopCart(this.list._id, 1)
+      this.$eventBus.$emit('addToShopCartEnd');
+    },
+    toShopCart(){
+      this.$router.push({
+        name: 'ShopCart'
+      })
+      this.$eventBus.$emit('navToZX','ShopCart')
     }
   }
 };

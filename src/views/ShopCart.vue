@@ -1,106 +1,192 @@
 <template>
-  <div class="list">
-    <van-nav-bar
-      title="我的购物车"
-      left-text="返回"
-      left-arrow
-      @click-left="onClickLeft"
-    />
-    <h1>{{inf}}</h1>
-    <div v-if="flag">
-      <div class="box" v-for='(item,index) in products' :key='index'>
-        <img :src="'https://api.cat-shop.penkuoer.com'+item.imgSrc"/>
-        <div class="pro-detail">
-          <p>{{item.name}}</p>
-          <span>价格：{{item.price}}</span>&nbsp;&nbsp;&nbsp;
-          <span>库存：{{item.quatity}}</span>
-          <van-stepper class="num" v-model="item.num" />
-        </div>
+<div>
+  <van-nav-bar
+    title="我的购物车"
+  />
+  <div class="cart-box" v-if="shopCart.length">
+      <div class="card" v-for="(item,index) in list" :key="index">
+          <dl>
+            <dt>
+              <input class="danx" type="checkbox"  v-model="checkeds" :value="item._id">
+              <img :src='serverUrl+item.coverImg'/>
+            </dt>
+            <dd>
+              <div class="text">
+                <p>{{item.name}}</p>
+                <!-- <p>{{item.descriptions}}</p> -->
+                <p>￥{{item.price}}</p>
+              </div>
+              <div class="sl">
+                <van-icon class="dela" @click="handleRemove(item.pid,index)" name="delete" />
+                数量：
+                <button class="num" @click="handleReduce(index,item._id)">-</button>
+                  &nbsp;
+                  <span>{{item.num}}</span>
+                  &nbsp;
+                <button class="num" @click="handleAdd(item._id)">+</button>
+              </div>
+            </dd>
+          </dl>
       </div>
-    </div>
-    <!-- <p>{{carid}}</p>
-    <p>{{carname}}</p>
-    <p>{{carsrc}}</p>
-    <p>{{carprice}}</p> -->
-    
-      <van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit" class="carlist">
-        <van-checkbox v-model="checked">全选</van-checkbox>
-      </van-submit-bar>
-
+      <div class="cart-bottom">
+         <input class="quanx" type="checkbox"   @click="checkAll()" v-model="checkall">
+         <span>全选</span>
+        <div>共<span id="con">{{ count }}</span>件商品</div>
+        <div>总金额：<span>￥{{total}}元</span></div>
+      </div>
+  </div>
+  <div v-else>购物车为空</div>
   </div>
 </template>
 <script>
-import { get } from 'axios';
+import { getShopCart } from "../services/users";
+import { getProductDetail } from "../services/products";
 import { serverUrl } from '../utils/config'
+import { addToShopCart } from "../services/users";
+import { delFromProduct } from "../services/users"
 export default {
-  data() {
+   data() {
     return {
-      // carid: "",
-      // carname: "",
-      // carsrc: "",
-      // carprice: "",
-      // price:'',
-      flag : false, //购物车没有商品时不显示数据
-      checked:'',
-      inf: '',
       list: [],
-      products: []
+      serverUrl,
+      checkall: false,
+      checkeds: [],
+      shopCart:[],
     };
   },
+  created(){
+   this.getShop();
+  },
   methods: {
-    onSubmit(){
-
+    getShop:function(){
+       getShopCart().then(res=>{
+       this.shopCart=res.data
+       console.log(res.data)
+       for(let i=0;i<this.shopCart.length;i++){
+        this.list.push(this.shopCart[i].product)
+        this.list[i].num=this.shopCart[i].quantity
+        this.list[i].pid=this.shopCart[i]._id
+       }
+    });
+    this.$eventBus.$emit('addToShopCartEnd');
     },
-    onClickLeft() {
-      this.$router.go(-1);
+    handleReduce: function(index,id) {
+      if (this.list[index].num == 1) {
+        return;
+      } else {
+        addToShopCart(id, -1,this)
+        this.$eventBus.$emit('addToShopCartEnd');//派发的事件都在app.vue里执行
+        this.list=[]
+        this.getShop();
+      }
+    },
+    handleAdd: function(id) {
+      addToShopCart(id, 1,this)
+      this.$eventBus.$emit('addToShopCartEnd');
+      this.list=[]
+      this.getShop();
+    },
+    handleRemove: function(id,index) {
+      delFromProduct(id)
+      this.list=[]
+      this.getShop();
+    },
+    checkAll:function() {
+      var _this = this;
+      if (this.checkall) {
+        // 实现反选
+        this.checkeds = [];
+      } else {
+        // 实现全选
+        this.checkeds = [];
+        this.list.forEach(function(item) {
+          _this.checkeds.push(item._id);
+        });
+      }
+      if (this.checkeds.length === this.list.length) {
+        this.checkall = true;
+      }else{
+        this.checkall = false;
+      }
+    },
+  },
+  computed: {
+    count: function() {
+      var num = 0;
+      for (var i in this.list) {
+        num += parseInt(this.list[i].num);
+      }
+      return num;
+    },
+
+    total: function() {
+      var total = 0;
+      for (var i in this.list) {
+        total += this.list[i].price * this.list[i].num;
+      }
+      return total;
     }
   },
-  created() {
-    if(localStorage.getItem('my-shopcart')){ //localstorage中如果有数据，显示对应商品
-      this.flag = true
-      this.list.push(JSON.parse(localStorage.getItem('my-shopcart')))
-      //console.log(this.list[0])
-      this.list[0].forEach((item) => { //这里this.list后面要加上索引0，才会取到对应商品信息。不知道为啥
-        //console.log(item)
-        //console.log(item.product)
-        get(`${serverUrl}/api/v1/products/${item.product}`).then(res => {  //通过商品id取对应商品
-          //console.log(res.data)
-          this.products.push({
-            imgSrc: res.data.coverImg,
-            name: res.data.name,
-            price: res.data.price,
-            quatity: res.data.quantity,
-            num: item.quantity
-          })
-        });
-      })
-      //console.log(this.products)
-    }else{
-      this.inf = '购物车为空'
-    }
   }
-};
 </script>
 <style scoped>
-  .carlist{margin-bottom: 3.1rem;}
-  .box{
-    margin: 1rem;
-    overflow: hidden
-  }
-  .box img{
-    width: 5rem;
-    height: 5rem;
-    float:left
-  }
-  .pro-detail{
-    margin-left: 6rem
-  }
-  .pro-detail p{
-    margin-top: 0.5rem
-  }
-  .pro-detail .num{
-    float: right;
-  }
+.card{
+  margin: 1rem;
+  overflow: hidden;
+  background: #efe
+}
+.card img{
+  width: 5rem;
+  height: 5rem;
+}
+.card dt{
+  float: left
+}
+.card dd{
+  float: left;
+  margin-left: 1rem
+}
+.card dd .text{
+  float: left;
+  
+}
+.card dd .sl{
+  float: left
+}
+.card dd .sl .num{
+  border: 0;
+  border-radius: 50%;
+}
+.card dd .sl .dela{
+  display: block;
+  margin-bottom: 1.5rem;
+  margin-left: 7rem;
+  font-size: 1.5rem
+}
+.card dd p{
+  width: 5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: 0.5rem;
+  margin-bottom: 1.2rem
+}
+.danx{
+  width: 2rem;
+  border: 0;
+  border-radius: 50%;
+  position: relative;
+  top: -2rem;
+}
+.cart-bottom{
+  position: fixed;
+  bottom: 3rem;
+  background: #efe;
+  width: 88%;
+  margin: 1rem;
+  padding: 0.5rem
+}
 </style>
+
 
 

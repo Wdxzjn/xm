@@ -41,6 +41,7 @@ export default {
         password: this.password
       }).then(res => {
         if (res.data.code == "success") {
+          localStorage.setItem('username',this.userName)
           this.$eventBus.$emit("navToZX", "UserCenter");
           Toast.success("登陆成功");
           loginIn(res.data.token);

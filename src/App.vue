@@ -31,7 +31,7 @@ export default {
       }
     })
     this.$eventBus.$on('addToShopCartEnd', () => {
-      this.shopCartCount = getShopCartCount();
+      //this.shopCartCount = getShopCartCount();
     })
   },
   data() {

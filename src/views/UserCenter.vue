@@ -4,7 +4,7 @@
             <div class='top-inf'>
                 <img src="../../public/tx.jpg" alt="">
                 <div class="text">
-                    <p class="user-name">后来</p>
+                    <p class="user-name">{{username}}</p>
                     <p class="logout" @click="logOutHandle">退出登录</p>
                 </div>
             </div>
@@ -88,27 +88,35 @@
 <script>
 import { logOut } from '../utils/auth'
 export default {
-  methods: {
-    logOutHandle() {
-      logOut()
-      // 派发跳转事件 控制底部导航栏选中效果
-      this.$eventBus.$emit('navToZX', 'Home')
-      this.$router.push({
-        name: 'Home'
-      })
+    data() {
+        return {
+            username: ''
+        }
     },
-    pageChange() {
-      this.$eventBus.$emit('navToZX','ShopCart')
-      this.$router.push({
-        name: 'ShopCart'
-      })
+    created() {
+        this.username = localStorage.getItem('username')
     },
-    toAddress() {
-      this.$router.push({
-        name: 'Address'
-      })
+    methods: {
+        logOutHandle() {
+        logOut()
+        // 派发跳转事件 控制底部导航栏选中效果
+        this.$eventBus.$emit('navToZX', 'Home')
+        this.$router.push({
+            name: 'Home'
+        })
+        },
+        pageChange() {
+        this.$eventBus.$emit('navToZX','ShopCart')
+        this.$router.push({
+            name: 'ShopCart'
+        })
+        },
+        toAddress() {
+        this.$router.push({
+            name: 'Address'
+        })
+        }
     }
-  }
   
 }
 </script>
