@@ -18,8 +18,7 @@
               </div>
               <div class="sl">
                 <van-icon class="dela" @click="handleRemove(item.pid,index)" name="delete" />
-                数量：
-                <button class="num" @click="handleReduce(index,item._id)">-</button>
+                <button class="num numAdd" @click="handleReduce(index,item._id)">-</button>
                   &nbsp;
                   <span>{{item.num}}</span>
                   &nbsp;
@@ -142,13 +141,12 @@ export default {
 }
 .card dt{
     float: left;
-    width: 30%;
+    width: 35%;
 }
 .card dd{
   float: left;
   margin-left:0;
   width: 65%;
-  padding-left: 5%
 }
 .card dd .text{
   float: left;
@@ -161,14 +159,17 @@ export default {
   border: 0;
   border-radius: 50%;
 }
+.card dd .sl .numAdd{
+  margin-left: 2rem
+}
 .card dd .sl .dela{
   display: block;
   margin-bottom: 1.5rem;
-  margin-left: 7rem;
+  margin-left:5rem;
   font-size: 1.5rem
 }
 .card dd p{
-  width: 5rem;
+  width:4rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
