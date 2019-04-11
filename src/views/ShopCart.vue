@@ -28,14 +28,15 @@
             </dd>
           </dl>
       </div>
-      <div class="cart-bottom">
+  </div>
+  
+  <div v-else>购物车为空</div>
+  <div class="cart-bottom">
          <input class="quanx" type="checkbox"   @click="checkAll()" v-model="checkall">
          <span>全选</span>
         <div>共<span id="con">{{ count }}</span>件商品</div>
         <div>总金额：<span>￥{{total}}元</span></div>
       </div>
-  </div>
-  <div v-else>购物车为空</div>
   </div>
 </template>
 <script>
@@ -61,7 +62,7 @@ export default {
     getShop:function(){
        getShopCart().then(res=>{
        this.shopCart=res.data
-       console.log(res.data)
+       //console.log(res.data)
        for(let i=0;i<this.shopCart.length;i++){
         this.list.push(this.shopCart[i].product)
         this.list[i].num=this.shopCart[i].quantity
@@ -140,11 +141,14 @@ export default {
   height: 5rem;
 }
 .card dt{
-  float: left
+    float: left;
+    width: 30%;
 }
 .card dd{
   float: left;
-  margin-left: 1rem
+  margin-left:0;
+  width: 65%;
+  padding-left: 5%
 }
 .card dd .text{
   float: left;
@@ -172,9 +176,6 @@ export default {
   margin-bottom: 1.2rem
 }
 .danx{
-  width: 2rem;
-  border: 0;
-  border-radius: 50%;
   position: relative;
   top: -2rem;
 }
@@ -185,6 +186,9 @@ export default {
   width: 88%;
   margin: 1rem;
   padding: 0.5rem
+}
+.cart-box{
+  margin-bottom: 10rem
 }
 </style>
 

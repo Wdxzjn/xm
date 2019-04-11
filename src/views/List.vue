@@ -35,9 +35,13 @@ export default {
   methods: {
     addToCartHandle(id) {
       //alert(id);
-      alert('添加成功')
-      addToShopCart(id, 1)
-      this.$eventBus.$emit('addToShopCartEnd');
+      if(sessionStorage.getItem('token')){
+        alert('添加成功')
+        addToShopCart(id, 1)
+        this.$eventBus.$emit('addToShopCartEnd')
+      }else{
+        alert('请先登录')
+      }  
     },
     loadMore() {
       this.page += 1;

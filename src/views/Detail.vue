@@ -42,9 +42,13 @@ export default {
     // }
     addToCartHandle() {
       //alert(id);
-      alert('添加成功')
-      addToShopCart(this.list._id, 1)
-      this.$eventBus.$emit('addToShopCartEnd');
+      if(sessionStorage.getItem('token')){
+        alert('添加成功')
+        addToShopCart(this.list._id, 1)
+        this.$eventBus.$emit('addToShopCartEnd')
+      }else{
+        alert('请先登录')
+      }
     },
     toShopCart(){
       this.$router.push({

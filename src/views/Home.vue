@@ -63,7 +63,7 @@ export default {
   },
   created() {
     get(`${serverUrl}/api/v1/products`).then(res => {
-      console.log(res.data.products);
+      //console.log(res.data.products);
       this.list = res.data.products;
     });
   },
